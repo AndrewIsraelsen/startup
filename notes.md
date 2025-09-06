@@ -1,5 +1,7 @@
 # CS 260 Notes
 
+Now this is gonna be epic
+
 [My startup - Simon](https://simon.cs260.click)
 
 ## Helpful links

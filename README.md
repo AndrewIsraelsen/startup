@@ -1,4 +1,4 @@
-# Your startup name here
+# Foundation Calendar
 
 [My Notes](notes.md)
 
