@@ -2,6 +2,28 @@
 
 Now this is gonna be epic
 
+In this github reading, I primarily learned about Personal Access Tokens. The last time I used Github from command line, they weren't required, and I don't like that they are now. It makese sense though, they're definitely far more secure than a password. They're a pain though, and I wish there was an option to use passwords still.
+
+Other than that, basically it's what I remember.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Pre-made notes I guess:
+
+
 [My startup - Simon](https://simon.cs260.click)
 
 ## Helpful links
