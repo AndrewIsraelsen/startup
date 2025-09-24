@@ -43,9 +43,14 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
+###Inputs
+Using the type attribute on input elements can give lots of good specific functionality. For example, "file" as a type for an input will help the user select a local file. "Date" will help pick a date, and the list goes on and on.
 
-The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
+Other common attributes other than "type" for inputs are "name", "disabled", "value", and "required"
+"pattern" can also be used to use a regular expression to check input
+"hidden" type can send data unseen to the user
+
+
 
 ## CSS
 
