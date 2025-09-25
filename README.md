@@ -14,7 +14,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] A concise and compelling elevator pitch
 - [x] Description of key features
 - [x] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -56,21 +56,21 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
 
 ## 🚀 HTML deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - Created and linked pages index, calendar, stats and timeline
+- [x] **Proper HTML element usage** - Used elements for different parts of page appropriately. Especially the consistent nav bar at the bottom will be useful
+- [x] **Links** - Linked pages together and to the github
+- [x] **Text** - General vibe of each page is contextually visual through the placeholder text
+- [x] **3rd party API placeholder** - Holiday placeholder events included to show 3rd party api
+- [x] **Images** - Calendar and favicon.ico image included on page
+- [x] **Login placeholder** - Login place holder on index.html
+- [x] **DB data placeholder** - Placeholder Events on calendar that will be stored in DB
+- [x] **WebSocket placeholder** - Stats page shows placeholder of other's calendar stats updates
 
 ## 🚀 CSS deliverable
 
