@@ -43,12 +43,18 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-###Inputs
+### Inputs
 Using the type attribute on input elements can give lots of good specific functionality. For example, "file" as a type for an input will help the user select a local file. "Date" will help pick a date, and the list goes on and on.
 
 Other common attributes other than "type" for inputs are "name", "disabled", "value", and "required"
 "pattern" can also be used to use a regular expression to check input
 "hidden" type can send data unseen to the user
+
+### Media
+
+Use "alt" attribute to have text replacement under html media element that won't load.
+
+"controls" attribute for audio to let user control audio playback. "autoplay" starts as soon as it loads, and "loop" has it loop over and over.
 
 
 
