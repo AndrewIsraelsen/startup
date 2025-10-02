@@ -3,10 +3,12 @@
 }
 
 ul {list-style-type: none;}
+
 body {
     display: flex;
     flex-direction: column;
     
+    min-height: 100vh;
     
     
     font-family: Verdana, sans-serif;
@@ -14,11 +16,16 @@ body {
 }
 
 header{
-    flex: 0 40px;
+    flex: 0 20px;
 }
 
 #date {
     align-self: start;
+}
+
+
+main {
+    flex: 1;
 }
 
 /* Weekdays */
@@ -43,4 +50,8 @@ header{
 
 .days li:nth-child(even) {
   background-color: white;
+}
+
+footer{
+    flex: 0 20px;
 }
