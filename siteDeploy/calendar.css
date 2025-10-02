@@ -10,15 +10,14 @@ main {
     justify-content: center;
     margin: 0 auto;
 
+    overflow-y: auto;
+    overflow-x: auto;
+
 }
 
 
 #cal {
     display: flex;
-}
-
-#date {
-    align-self: start;
 }
 
 

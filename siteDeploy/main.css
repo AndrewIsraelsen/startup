@@ -5,24 +5,34 @@
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
     font-family: Verdana, sans-serif;
     margin: 0;
     padding: 0;
-
+    overflow: hidden;
 }
 
-header{
-    flex: 0 60px;
+header {
     flex-shrink: 0;
 }
 
-footer{
-    flex: 0 5px;
+main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+}
 
+.nav {
+    flex-shrink: 0;
+}
+
+footer {
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0 !important;
+    align-items: center;
+    margin: 0;
 }
 
 footer > * {
@@ -34,13 +44,12 @@ footer > * {
 #logo-title {
     display: flex;
     flex-direction: row;
-
-
 }
 
 h1 {
-    flex: 1
+    flex: 1;
 }
+
 img {
-    flex: 1
+    flex: 1;
 }
