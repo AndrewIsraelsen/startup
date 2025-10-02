@@ -11,6 +11,7 @@
 
         <title>Foundation Calendar</title>
         <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="index.css">
         <link rel="icon" href="favicon.ico" />
     </head>
     <body>
@@ -54,8 +55,7 @@
         </header>
 
         <main>
-        <h1>Login</h1>
-        <form method="get" action="play.html">
+            <h2 class="fw-bold">Login</h2>
             <div>
             <span>Username</span>
             <input type="text" placeholder="johnsmith@email.com" />
@@ -64,9 +64,10 @@
             <span>Password</span>
             <input type="password" placeholder="password" />
             </div>
-            <button type="submit">Login</button>
-            <button type="submit">Create</button>
-        </form>
+            <div id="button">
+                <a href="calendar.html" class="btn btn-primary" role="button">Login</a>
+                <a href="calendar.html" class="btn btn-primary" role="button">Create</a>
+            </div>
         </main>
         <hr />
 
