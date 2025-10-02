@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#logo-title {
+    display: flex;
+    flex-direction: row;
+    
+
+}
+
+h1 {
+    flex: 1
+}
+img {
+    flex: 1
+}
