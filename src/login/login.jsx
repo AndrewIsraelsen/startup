@@ -4,7 +4,7 @@ import './login.css';
 
 export function Login() {
   return (
-        <main className="body">
+        <main className="login-main">
             <h2 className="fw-bold">Login</h2>
             <div>
             <span>Username</span>

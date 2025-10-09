@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './timeline.css';
 
 export function Timeline() {
   return (
@@ -10,10 +10,10 @@ export function Timeline() {
         <h3 className="text-center mb-4">CS260 Timeline</h3>
 
         <div className="text-center mb-4">
-          <button className="btn btn-outline-secondary rounded-circle" style={{width: '40px', height: '40px'}}>+</button>
+          <button className="btn btn-outline-secondary rounded-circle timeline-button">+</button>
         </div>
 
-        <div style={{maxWidth: '600px', margin: '0 auto'}}>
+        <div className="timeline-container">
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">
@@ -21,7 +21,7 @@ export function Timeline() {
             </div>
           </div>
 
-          <div style={{borderLeft: '2px dotted #ccc', height: '20px', margin: '0 auto', width: '0'}}></div>
+          <div className="timeline-divider"></div>
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">
@@ -29,7 +29,7 @@ export function Timeline() {
             </div>
           </div>
 
-          <div style={{borderLeft: '2px dotted #ccc', height: '20px', margin: '0 auto', width: '0'}}></div>
+          <div className="timeline-divider"></div>
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">
@@ -37,7 +37,7 @@ export function Timeline() {
             </div>
           </div>
 
-          <div style={{borderLeft: '2px dotted #ccc', height: '20px', margin: '0 auto', width: '0'}}></div>
+          <div className="timeline-divider"></div>
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">
@@ -45,7 +45,7 @@ export function Timeline() {
             </div>
           </div>
 
-          <div style={{borderLeft: '2px dotted #ccc', height: '20px', margin: '0 auto', width: '0'}}></div>
+          <div className="timeline-divider"></div>
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">
@@ -53,7 +53,7 @@ export function Timeline() {
             </div>
           </div>
 
-          <div style={{borderLeft: '2px dotted #ccc', height: '20px', margin: '0 auto', width: '0'}}></div>
+          <div className="timeline-divider"></div>
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">

@@ -1,0 +1,16 @@
+.timeline-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.timeline-button {
+    width: 40px;
+    height: 40px;
+}
+
+.timeline-divider {
+    border-left: 2px dotted #ccc;
+    height: 20px;
+    margin: 0 auto;
+    width: 0;
+}

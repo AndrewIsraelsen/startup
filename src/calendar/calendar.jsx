@@ -3,7 +3,7 @@ import './calendar.css';
 
 export function Calendar() {
   return (
-        <main>
+        <main className="calendar-main">
 
         <ul className="days">
             <li>SUN 11</li>
