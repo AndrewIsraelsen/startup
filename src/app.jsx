@@ -47,7 +47,13 @@ export default function App() {
                 </nav>
             </header>
 
-            <main>App components go here</main>
+            <Routes>
+                <Route path='/' element={<Login />} exact />
+                <Route path='/calendar' element={<Calendar />} />
+                <Route path='/stats' element={<Stats />} />
+                <Route path='/timeline' element={<Timeline />} />
+                <Route path='*' element={<NotFound />} />
+            </Routes>
 
             <nav className="nav nav-pills nav-fill">
                 <a className="nav-link" href="stats.html">Stats</a>
@@ -65,4 +71,8 @@ export default function App() {
         </div>
     </BrowserRouter>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
