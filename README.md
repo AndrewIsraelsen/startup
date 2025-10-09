@@ -87,9 +87,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- [x] **Bundled using Vite** - It's in the new minimized format
+- [x] **Components** - It's running on react components
+- [x] **Router** - The pages are routed on a single page site
 
 ## 🚀 React part 2: Reactivity deliverable
 
