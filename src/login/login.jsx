@@ -1,10 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './login.css';
 
 export function Login() {
   return (
-        <main class="body">
-            <h2 class="fw-bold">Login</h2>
+        <main className="body">
+            <h2 className="fw-bold">Login</h2>
             <div>
             <span>Username</span>
             <input type="text" placeholder="johnsmith@email.com" />
@@ -14,8 +15,8 @@ export function Login() {
             <input type="password" placeholder="password" />
             </div>
             <div id="button">
-                <a href="calendar.html" class="btn btn-primary" role="button">Login</a>
-                <a href="calendar.html" class="btn btn-primary" role="button">Create</a>
+                <NavLink to="/calendar" className="btn btn-primary" role="button">Login</NavLink>
+                <NavLink to="/calendar" className="btn btn-primary" role="button">Create</NavLink>
             </div>
         </main>
   );
