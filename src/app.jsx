@@ -28,13 +28,13 @@ export default function App() {
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="/index.html">Logout</a>
+                                <NavLink className="nav-link active" aria-current="page" to="/">Logout</NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="stats.html">Stats</a>
+                                <NavLink className="nav-link" to="/stats">Stats</NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Settings</a>
+                                <NavLink className="nav-link" to="#">Settings</NavLink>
                             </li>
                             </ul>
                             <form className="d-flex mt-3" role="search">
@@ -56,9 +56,9 @@ export default function App() {
             </Routes>
 
             <nav className="nav nav-pills nav-fill">
-                <a className="nav-link" href="stats.html">Stats</a>
-                <a className="nav-link active" aria-current="page" href="calendar.html">Calendar</a>
-                <a className="nav-link" href="timeline.html">Timeline</a>
+                <NavLink className="nav-link" to="/stats">Stats</NavLink>
+                <NavLink className="nav-link active" aria-current="page" to="/calendar">Calendar</NavLink>
+                <NavLink className="nav-link" to="/timeline">Timeline</NavLink>
             </nav>
 
 
