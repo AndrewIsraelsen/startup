@@ -57,7 +57,7 @@ export default function App() {
 
             <nav className="nav nav-pills nav-fill">
                 <NavLink className="nav-link" to="/stats">Stats</NavLink>
-                <NavLink className="nav-link active" aria-current="page" to="/calendar">Calendar</NavLink>
+                <NavLink className="nav-link" to="/calendar">Calendar</NavLink>
                 <NavLink className="nav-link" to="/timeline">Timeline</NavLink>
             </nav>
 

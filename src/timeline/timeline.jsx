@@ -6,14 +6,14 @@ export function Timeline() {
     <main>
       <h1>Timeline</h1>
 
-      <div className="container py-5">
+      <div className="container-fluid py-5">
         <h3 className="text-center mb-4">CS260 Timeline</h3>
 
         <div className="text-center mb-4">
           <button className="btn btn-outline-secondary rounded-circle" style={{width: '40px', height: '40px'}}>+</button>
         </div>
 
-        <div style={{maxWidth: '400px', margin: '0 auto'}}>
+        <div style={{maxWidth: '600px', margin: '0 auto'}}>
 
           <div className="text-center mb-2">
             <div className="border rounded p-2">
