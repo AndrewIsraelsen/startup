@@ -19,7 +19,7 @@ export default function App() {
                         </button>
                         <a id="date" className="navbar-brand ms-2" href="#">Sept 24</a>
                         <a className="navbar-brand position-absolute top-50 start-50 translate-middle" href="#"><img src="Foundation Calendar.png" alt="Foundation Calendar" style={{height: '50px'}}/></a>
-                        <a className="navbar-brand ms-auto" href="#">Foundation Calendar</a>
+                        <a className="navbar-brand ms-auto" href="#">FC</a>
                         <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Foundation Calendar</h5>
