@@ -115,9 +115,15 @@ export function Cal() {
                     formElement.insertBefore(eventTypeDropDown, formElement.firstChild);
 
                     // If editing an existing event, fill in the event type with what it is
-                    const eventGetType = document.getElementById('eventTypeId');
+                    const eventGetType = document.getElementById('EventTypeId');
                     if (args.data.EventTypeId) {
                         eventGetType.value = args.data.EventTypeId;
+                        console.log("baba", args.data.EventTypeId);
+                    } else {
+                        // Set default to 'other' for new events
+                        eventGetType.value = 'other';
+
+
                     }
                 }
             }, 0);
@@ -125,21 +131,99 @@ export function Cal() {
     };
 
 
-    
-    
-    
-    
-    return <main className="flex justify-center items-center min-h-screen">
-        <ScheduleComponent 
-            width={400}
-            height={500}
+    // Use our own "CRUD" system instead of Sync fusion so that we can handle event types
 
+    const onActionBegin = (args) => {
+        console.log('Action beginning:', args.requestType);
+
+        if (args.requestType == 'eventCreate' || args.requestType == 'eventChange' || args.requestType == 'eventRemove' ) {
+            // Don't use their "CRUD" systems
+            args.cancel = true;
+        }
+
+        if (args.requestType == 'eventCreate') {
+            // Get event data
+            const eventData = Array.isArray(args.data) ? args.data[0] : args.data;
+
+            // Validate that event type was selected
+            if (!eventData.EventTypeId) {
+            alert('Please select an event type');
+            console.log(eventData);
+            return; // Stop the event creation
+            }
+
+            // Find event type to get give color
+            const eventType = eventTypes.find(t => t.id == eventData.EventTypeId)
+
+            // Add color to event
+            const eventWithColor = {
+                ...eventData,
+                // Unique ID based on milliseconds 
+                Id: Date.now(),
+                Color: eventType?.color
+            };
+
+            console.log('Creating event:', eventWithColor);
+
+            // Add new event to our our Event state
+            setEvents([...events, eventWithColor]);
+        } else if (args.requestType == 'eventChange') {
+            // Get event data
+            const eventData = Array.isArray(args.data) ? args.data[0] : args.data;
+
+            // Find event type to get its color
+            const eventType = eventTypes.find(t => t.id == eventData.EventTypeId);
+
+            // Add color to event
+            const eventWithColor = {
+                ...eventData,
+                Color: eventType?.color
+            };
+
+            console.log('Updating event:', eventWithColor);
+
+            // Update existing event
+            setEvents(events.map(evt =>
+                evt.Id == eventWithColor.Id ? eventWithColor : evt
+            ));
+        } else if (args.requesetType == 'eventRemove') {
+            //Delete event
+            const eventData = Array.isArray(args.data) ? args.data[0] : args.data;
+            
+            console.log('Deleting event:', eventData.Id);
+
+            setEvents(events.filter(evt => evt.Id !== eventData.Id));
+        }
+
+
+
+    }
+    
+    
+    return (
+    <main className="flex justify-center items-center min-h-screen">
+        <ScheduleComponent 
+            showQuickInfo={false}
+            selectedDate={new Date()}
             eventSettings={{
+                dataSource: events,
+                fields: {
+                    id: 'Id',
+                    subject: { name: 'Subject' },
+                    startTime: { name: 'StartTime' },
+                    endTime: {name: 'EndTime' },
+                    description: { name: 'Description'},
+                    eventTimeId: { name: 'EventTypeId' }
+                }
 
             }}
             popupOpen={onPopupOpen}
-        
-        
+            actionBegin={onActionBegin}
+            eventRendered={(args) => {
+                if (args.data.Color) {
+                    args.element.style.backgroundColor = args.data.Color;
+                }
+            }}
         >
             <ViewsDirective>
                 <ViewDirective option="Day" />
@@ -147,5 +231,5 @@ export function Cal() {
             <Inject services={[Day]} />
         </ScheduleComponent>
     </main>
-
+    );
 }
