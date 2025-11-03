@@ -16,12 +16,12 @@ import { DEFAULT_EVENT_TYPES } from '../shared/eventTypes';
 
 export function Cal() {
     registerLicense(
-        "Ngo9BigBOggjHTQxAR8/V1JFaF1cX2hIfkx0TXxbf1x1ZFREal9RTnRWUiweQnxTdEBiWX1fcHRWRmJVV0N3WkleYg=="
+        "Ngo9BigBOggjGyl/Vkd+XU9FcVRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS3tSd0VgWHtacnRVQGleVk91Xg=="
     );
 
     // States: 
     
-    // vent Types
+    // event Types
     const [eventTypes, setEventTypes] = useState([]);
 
     // Cal Events

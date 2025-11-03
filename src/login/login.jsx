@@ -1,11 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './login.css';
+import Button from 'react-bootstrap/Button';
+
+import { Unauthenticated } from './unauthenticated';
+import { Authenticated } from './authenticated';
+import { AuthState } from './authState';
+
 
 export function Login() {
+
+
+
+
   return (
         <main className="login-main">
-            <h1 style={{color:"red", fontSize:"7em"}}>IN PROGRESS</h1>
             <h2 className="fw-bold">Login</h2>
             <div>
             <span>Username</span>
@@ -16,9 +25,12 @@ export function Login() {
             <input type="password" placeholder="password" />
             </div>
             <div id="button">
-                <NavLink to="/calendar" className="btn btn-primary" role="button">Login</NavLink>
-                <NavLink to="/calendar" className="btn btn-primary" role="button">Create</NavLink>
+                <Button onClick={() => loginUser()} className="btn btn-primary">Login</Button>
+                <Button onClick={() => createUser()} className="btn btn-secondary">Create</Button>
             </div>
+
+            
+
         </main>
   );
 }
