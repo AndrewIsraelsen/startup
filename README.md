@@ -95,8 +95,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - Calendar is fully implemented, stats webhooks is partial. Timeline and Stats still in progress for now.
+- [x] **Hooks** - Used useEffect and useState primarily for calendar data and updating
 
 ## 🚀 Service deliverable
 
