@@ -4,6 +4,7 @@ import './timeline.css';
 export function Timeline() {
   return (
     <main>
+      <h1 style={{color:"red", fontSize:"7em"}}>IN PROGRESS</h1>
       <h1>Timeline</h1>
 
       <div className="container-fluid py-5">

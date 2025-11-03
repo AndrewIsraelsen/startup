@@ -5,6 +5,7 @@ import './login.css';
 export function Login() {
   return (
         <main className="login-main">
+            <h1 style={{color:"red", fontSize:"7em"}}>IN PROGRESS</h1>
             <h2 className="fw-bold">Login</h2>
             <div>
             <span>Username</span>

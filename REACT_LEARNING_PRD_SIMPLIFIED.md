@@ -573,24 +573,12 @@ return (
 
 ## Phase 3: Building the Stats Page (1 hour)
 
-### Step 3.1: Install Chart Library
+### Step 3.1: Understanding What We're Using
 
-**Open terminal in VS Code:**
-- View → Terminal (or Ctrl+` on Windows, Cmd+` on Mac)
+**For this Stats page, we'll use:**
+- **Bootstrap Progress Bars** - Already included in your project for horizontal bar visualization
 
-**Run this command:**
-
-```bash
-npm install recharts
-```
-
-**What is Recharts?**
-- React charting library
-- Makes it easy to create pie charts, bar charts, etc.
-- Works well with React state
-- Automatically responsive
-
-**Wait for install to complete** before moving to next step.
+**No additional installation needed!** Bootstrap is already set up in your project.
 
 ---
 
@@ -602,7 +590,6 @@ npm install recharts
 
 ```javascript
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { DEFAULT_EVENT_TYPES } from '../shared/eventTypes';
 import './stats.css';
 
@@ -667,8 +654,8 @@ export function Stats() {
 
     console.log('Hours per type:', typeHours);
 
-    // Build chart data
-    const chartData = [];
+    // Build breakdown data
+    const breakdownData = [];
     let totalScheduledHours = 0;
 
     Object.keys(typeHours).forEach(typeId => {
@@ -677,24 +664,31 @@ export function Stats() {
 
       const eventType = eventTypes.find(t => t.id === typeId);
 
-      chartData.push({
+      breakdownData.push({
         name: eventType?.name || typeId,
-        value: hours,
-        color: eventType?.color || '#6B7280'
+        hours: hours,
+        color: eventType?.color || '#6B7280',
+        percentage: 0 // Will calculate after we know total
       });
     });
 
-    // Add "Empty Time" if there's any
-    const emptyHours = 24 - totalScheduledHours;
-    if (emptyHours > 0) {
-      chartData.push({
-        name: 'Empty Time',
-        value: emptyHours,
-        color: '#E5E7EB'
+    // Add "Undefined" time if there's any
+    const undefinedHours = 24 - totalScheduledHours;
+    if (undefinedHours > 0) {
+      breakdownData.push({
+        name: 'Undefined',
+        hours: undefinedHours,
+        color: '#E5E7EB',
+        percentage: 0
       });
     }
 
-    return chartData;
+    // Calculate percentages (out of 24 hours)
+    breakdownData.forEach(item => {
+      item.percentage = (item.hours / 24) * 100;
+    });
+
+    return breakdownData;
   };
 
   /**
@@ -716,12 +710,20 @@ export function Stats() {
     return `${year}-${month}-${day}`;
   };
 
-  const chartData = calculateTimeBreakdown();
+  /**
+   * Format date for display
+   */
+  const formatDateForDisplay = (date) => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${months[date.getMonth()]} ${date.getDate()}`;
+  };
+
+  const breakdownData = calculateTimeBreakdown();
 
   return (
     <main className="stats-page">
       <div className="stats-container">
-        <h1>Time Breakdown</h1>
+        <h1>{formatDateForDisplay(selectedDate)}</h1>
 
         {/* Date Selector */}
         <div className="date-selector">
@@ -733,46 +735,34 @@ export function Stats() {
           />
         </div>
 
-        {/* Pie Chart */}
-        {chartData.length > 0 ? (
-          <div className="chart-container">
-            <ResponsiveContainer width="100%" height={400}>
-              <PieChart>
-                <Pie
-                  data={chartData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={(entry) => `${entry.name}: ${entry.value.toFixed(1)}h`}
-                  outerRadius={120}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {chartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+        <h3>Today, You spent your time like this:</h3>
 
-            {/* Detailed Breakdown */}
-            <div className="breakdown-list">
-              <h2>Detailed Breakdown</h2>
-              <ul>
-                {chartData.map((item, index) => (
-                  <li key={index}>
-                    <span
-                      className="color-indicator"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <span className="type-name">{item.name}:</span>
-                    <span className="hours">{item.value.toFixed(1)} hours</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        {/* Bootstrap Progress Bars */}
+        {breakdownData.length > 0 ? (
+          <div className="breakdown-bars">
+            {breakdownData.map((item, index) => (
+              <div key={index} className="bar-item">
+                <div>{item.name} - {item.hours.toFixed(1)}hr</div>
+                <div
+                  className="progress"
+                  role="progressbar"
+                  aria-label={`${item.name} progress`}
+                  aria-valuenow={item.percentage}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div
+                    className="progress-bar"
+                    style={{
+                      width: `${item.percentage}%`,
+                      backgroundColor: item.color
+                    }}
+                  >
+                    {item.hours.toFixed(1)}hr
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <p className="no-events">No events for this day. Go add some!</p>
@@ -791,16 +781,21 @@ export function Stats() {
    - `selectedDate` - which day to show stats for
 
 2. **calculateTimeBreakdown():**
-   - Filters events for the selected day
-   - Calculates total hours per event type
-   - Builds data array for the pie chart
-   - Adds "Empty Time" for unscheduled hours
+   - Filters events for the selected day using `isSameDay()` helper function
+   - Calculates total hours per event type by subtracting start from end time
+   - Builds data array with name, hours, color, and percentage
+   - Adds "Undefined" time for unscheduled hours (24 - total scheduled)
+   - Calculates percentage out of 24 hours for each bar width
 
-3. **Pie Chart:**
-   - Uses Recharts library
-   - Each slice represents an event type
-   - Colors match the event type colors
-   - Shows hours in the label
+3. **Bootstrap Progress Bars:**
+   - `.map()` creates one bar for each event type
+   - Each bar uses the event type's color via inline `backgroundColor` style
+   - Width is set to percentage of 24 hours (`width: ${item.percentage}%`)
+   - Shows hours inside the bar and in the label above
+
+4. **Date Formatting:**
+   - `formatDateForInput()` - Converts Date to "YYYY-MM-DD" for the date input
+   - `formatDateForDisplay()` - Converts Date to "Jan 15" format for the heading
 
 ---
 
@@ -829,6 +824,11 @@ export function Stats() {
   color: #1f2937;
 }
 
+.stats-container h3 {
+  color: #374151;
+  margin-bottom: 20px;
+}
+
 .date-selector {
   margin-bottom: 24px;
   display: flex;
@@ -848,49 +848,34 @@ export function Stats() {
   font-size: 16px;
 }
 
-.chart-container {
-  margin-top: 24px;
-}
-
-.breakdown-list {
-  margin-top: 32px;
-}
-
-.breakdown-list h2 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #1f2937;
-}
-
-.breakdown-list ul {
-  list-style: none;
-  padding: 0;
-}
-
-.breakdown-list li {
+.breakdown-bars {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 0;
-  border-bottom: 1px solid #e5e7eb;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.color-indicator {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.bar-item {
+  margin-bottom: 8px;
 }
 
-.type-name {
+.bar-item > div:first-child {
+  margin-bottom: 8px;
   font-weight: 500;
   color: #374151;
-  min-width: 100px;
 }
 
-.hours {
-  color: #6b7280;
-  margin-left: auto;
+/* Bootstrap progress bar is already styled by Bootstrap */
+.progress {
+  height: 30px;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .no-events {
@@ -910,21 +895,24 @@ export function Stats() {
 1. Make sure you have some events in your calendar
 2. Navigate to the Stats page
 3. You should see:
+   - A date heading showing the selected date (e.g., "Oct 22")
    - A date selector (defaults to today)
-   - A pie chart showing time breakdown
-   - A detailed list below the chart
+   - Bootstrap progress bars showing time breakdown
+   - Each bar labeled with event type and hours
 4. Try changing the date:
-   - Select a day with events - chart updates
+   - Select a day with events - bars update
    - Select a day with no events - "No events" message
 5. Verify colors match your event types
 6. Check that hours add up correctly
+7. Verify bar widths are proportional to hours (e.g., 12 hours = 50% width)
 
 **Common Issues:**
 
 - **"No events" always shows:** Check that events are being loaded (check console logs)
-- **Chart doesn't appear:** Verify Recharts is installed (`npm install recharts`)
+- **Progress bars don't appear:** Verify Bootstrap is imported in your project
 - **Wrong colors:** Check that event types are loading correctly
 - **Wrong hours:** Check that StartTime and EndTime are valid Date objects
+- **Wrong percentages:** Verify calculation divides by 24 hours
 
 ---
 
@@ -945,12 +933,13 @@ export function Stats() {
 
 **Stats Page:**
 - [ ] Shows events for today by default
-- [ ] Pie chart displays with correct colors
-- [ ] Detailed breakdown matches chart
+- [ ] Bootstrap progress bars display with correct colors
+- [ ] Each bar shows event type name and hours
 - [ ] Can change date
-- [ ] Chart updates when date changes
-- [ ] Shows "Empty Time" for unscheduled hours
+- [ ] Bars update when date changes
+- [ ] Shows "Undefined" time for unscheduled hours
 - [ ] Shows "No events" message for days without events
+- [ ] Bar widths are proportional to hours
 
 **localStorage Persistence:**
 - [ ] Events persist after refresh
@@ -1014,6 +1003,12 @@ export function Stats() {
 - Verify date filtering logic (isSameDay function)
 - Check hour calculation math
 - Verify eventTypes are loading
+
+**Issue: Progress bars don't show or look wrong**
+- Verify Bootstrap CSS is loaded in your project
+- Check that percentage calculation is correct (hours / 24 * 100)
+- Verify color is being applied via inline style
+- Check browser DevTools to see if Bootstrap classes are applied
 
 ### Debugging Tips
 

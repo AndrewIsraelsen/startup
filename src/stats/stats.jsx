@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './stats.css';
 
 export function Stats() {
-  return (
+
+    useEffect(() => {
+        const websoc = document.getElementById('websoc');
+        const messages = [
+            `<div>John hit 4 hours on excercise this week!</div>`,
+            `<div>Tim is almost at his goal of 3 hours of study, encourage him!</div>`,
+            `<div>Bill reached 8 hours of sleep last night!</div>`
+        ];
+        let count = 0;
+
+        const interval = setInterval(() => {
+            if (websoc && count < messages.length) {
+                websoc.innerHTML += messages[count];
+                count++;
+
+                if (count >= messages.length) {
+                    clearInterval(interval);
+                }
+            }
+        }, 2000);
+
+        // Cleanup: Clear interval when component unmounts
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
         <main>
+          <h1 style={{color:"red", fontSize:"7em"}}>IN PROGRESS</h1>
           <h1>Sept 24</h1>
 
           <h3>Today, You spent your time like this:</h3>
@@ -40,11 +66,7 @@ export function Stats() {
           </div>
           
           <h3>Friend updates (websocket powered):</h3>
-          <div>
-
-              <div>John hit 4 hours on excercise this week!</div>
-              <div>Tim is almost at his goal of 3 hours of study, encourage him!</div>
-              <div>Bill reached 8 hours of sleep last night!</div>
+          <div id='websoc'>
 
           </div>
 
