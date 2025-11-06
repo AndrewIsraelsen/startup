@@ -68,7 +68,7 @@ export default function App() {
                  }
                  exact
                  />    
-                <Route path='/calendar' element={<Calendar />} />
+                <Route path='/calendar' element={<Calendar userName={userName} />} />
                 <Route path='/stats' element={<Stats />} />
                 <Route path='/timeline' element={<Timeline />} />
                 <Route path='*' element={<NotFound />} />

@@ -17,6 +17,10 @@ export function Authenticated(props) {
       })
       .finally(() => {
         localStorage.removeItem('userName');
+        // Clear user-specific data
+        localStorage.removeItem(`storedEvents_${props.userName}`);
+        localStorage.removeItem(`storedEventTypes_${props.userName}`);
+        localStorage.removeItem('userName');
         props.onLogout();
       });
   }
@@ -25,7 +29,7 @@ export function Authenticated(props) {
     <div>
       <div className='playerName'>{props.userName}</div>
       <Button variant='primary' onClick={() => navigate('/calendar')}>
-        Play
+        Calendar
       </Button>
       <Button variant='secondary' onClick={() => logout()}>
         Logout

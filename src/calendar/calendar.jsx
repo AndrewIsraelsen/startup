@@ -3,10 +3,10 @@ import './calendar.css';
 import { Cal } from './cal';
 
 
-export function Calendar() {
+export function Calendar({ userName }) {
   return (
     
-        <Cal />
+        <Cal userName={userName} />
 
   );
 }

@@ -14,7 +14,7 @@ import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Inject } from '@
 import { registerLicense } from '@syncfusion/ej2-base';
 import { DEFAULT_EVENT_TYPES } from '../shared/eventTypes';
 
-export function Cal() {
+export function Cal(props) {
     registerLicense(
         "Ngo9BigBOggjGyl/Vkd+XU9FcVRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS3tSd0VgWHtacnRVQGleVk91Xg=="
     );
@@ -74,7 +74,7 @@ export function Cal() {
     useEffect(() => {
         console.log('Loading events from localStorage...');
         
-        const savedEvents = localStorage.getItem('storedEvents');
+        const savedEvents = localStorage.getItem(`storedEvents_${props.userName}`);
 
         
         if(savedEvents){
@@ -116,7 +116,7 @@ export function Cal() {
     // Save events to localStorage when they change
     useEffect(() => {
         console.log('Saving calendar events to local storage', events);
-        localStorage.setItem('storedEvents', JSON.stringify(events));
+        localStorage.setItem(`storedEvents_${props.userName}`, JSON.stringify(events));
 
 
     }, [events]);

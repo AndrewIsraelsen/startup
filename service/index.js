@@ -9,7 +9,7 @@ const authCookieName = 'token';
 // The events and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let eventTypes = [];
-let events = [];
+let userEvents = {};
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -80,7 +80,9 @@ const verifyAuth = async (req, res, next) => {
 
 
 // GetEvents 
-apiRouter.get('/events', verifyAuth, (_req, res) => {
+apiRouter.get('/events', verifyAuth, (req, res) => {
+  const user = getUserFromToken(req.cookies[authCookieName]);
+  const events = userEvents[user.email] || [];
   res.send(events);
   console.log("Get:");
   console.log(events);
@@ -88,10 +90,14 @@ apiRouter.get('/events', verifyAuth, (_req, res) => {
 
 // SubmitEvents
 apiRouter.post('/events', verifyAuth, (req, res) => {
-  events = updateEvents(req.body);
-  res.send(events);
+  const user = getUserFromToken(req.cookies[authCookieName]);
+  if (!userEvents[user.email]) {
+    userEvents[user.email] = [];
+  }
+  userEvents[user.email].push(req.body);
+  res.send(userEvents[user.email]);
   console.log("Submit:");
-  console.log(events);
+  console.log(userEvents[user.email]);
 });
 
 // Default error handler
@@ -103,15 +109,6 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
-
-
-// updateEvents considers a new score for inclusion in the high events.
-function updateEvents(newEvent) {
-
-  events.push(newEvent);
-
-  return events;
-}
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
@@ -131,6 +128,11 @@ async function findUser(field, value) {
 
   return users.find((u) => u[field] === value);
 }
+
+function getUserFromToken(token) {
+    return users.find((u) => u.token === token);
+}
+
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
