@@ -128,8 +128,17 @@ export function Cal(props) {
 
   // Update the holidays useEffect
   useEffect(() => {
-      // Only fetch once ever
+      // Only fetch once ever, and only if we don't already have holidays
       if (holidaysFetched.current) return;
+
+      const hasHolidays = events.some(e => e.Id?.toString().startsWith('holiday-'));
+      if (hasHolidays) {
+          holidaysFetched.current = true;
+          return;
+      }
+
+      // Wait for events to be loaded from backend first
+      if (events.length === 0) return;
 
       fetch('https://date.nager.at/api/v3/PublicHolidays/2025/US')
           .then(response => response.json())
@@ -144,7 +153,8 @@ export function Cal(props) {
               }));
               setEvents(prev => [...prev, ...holidayEvents]);
               holidaysFetched.current = true; // Mark as fetched
-          });
+          })
+          .catch(err => console.error('Failed to fetch holidays:', err));
   }, [events]); // Keep dependency to wait for backend load
 
 

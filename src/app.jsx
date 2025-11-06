@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, Navigate } from 'react-router-dom';
 import { Login } from './login/login';
 import { Calendar } from './calendar/calendar';
 import { Stats } from './stats/stats';
@@ -17,41 +17,43 @@ export default function App() {
   return (
     <BrowserRouter>
         <div className = "body">
-            <header>
-                <nav className="navbar bg-light fixed-top">
-                    <div className="container-fluid">
-                        <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                        <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <a id="date" className="navbar-brand ms-2" href="#">Sept 24</a>
-                        <a className="navbar-brand position-absolute top-50 start-50 translate-middle" href="#"><img src="Foundation Calendar.png" alt="Foundation Calendar" style={{height: '50px'}}/></a>
-                        <a className="navbar-brand ms-auto" href="#">FC</a>
-                        <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                        <div className="offcanvas-header">
-                            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Foundation Calendar</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div className="offcanvas-body">
-                            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li className="nav-item">
-                                <NavLink className="nav-link active" aria-current="page" to="/">Logout</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/stats">Stats</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="#">Settings</NavLink>
-                            </li>
-                            </ul>
-                            <form className="d-flex mt-3" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                </nav>
-            </header>
+            {authState === AuthState.Authenticated && (
+              <header>
+                  <nav className="navbar bg-light fixed-top">
+                      <div className="container-fluid">
+                          <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                          <span className="navbar-toggler-icon"></span>
+                          </button>
+                          <a id="date" className="navbar-brand ms-2" href="#">Sept 24</a>
+                          <a className="navbar-brand position-absolute top-50 start-50 translate-middle" href="#"><img src="Foundation Calendar.png" alt="Foundation Calendar" style={{height: '50px'}}/></a>
+                          <a className="navbar-brand ms-auto" href="#">FC</a>
+                          <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                          <div className="offcanvas-header">
+                              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Foundation Calendar</h5>
+                              <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                          </div>
+                          <div className="offcanvas-body">
+                              <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                              <li className="nav-item">
+                                  <NavLink className="nav-link active" aria-current="page" to="/">Logout</NavLink>
+                              </li>
+                              <li className="nav-item">
+                                  <NavLink className="nav-link" to="/stats">Stats</NavLink>
+                              </li>
+                              <li className="nav-item">
+                                  <NavLink className="nav-link" to="#">Settings</NavLink>
+                              </li>
+                              </ul>
+                              <form className="d-flex mt-3" role="search">
+                              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
+                              <button className="btn btn-outline-success" type="submit">Search</button>
+                              </form>
+                          </div>
+                          </div>
+                      </div>
+                  </nav>
+              </header>
+            )}
 
             <Routes>
                 <Route
@@ -68,17 +70,31 @@ export default function App() {
                  }
                  exact
                  />    
-                <Route path='/calendar' element={<Calendar userName={userName} />} />
-                <Route path='/stats' element={<Stats />} />
-                <Route path='/timeline' element={<Timeline />} />
+                <Route path='/calendar' element={
+                  authState === AuthState.Authenticated ?
+                    <Calendar userName={userName} /> :
+                    <Navigate to="/" replace />
+                } />
+                <Route path='/stats' element={
+                  authState === AuthState.Authenticated ?
+                    <Stats /> :
+                    <Navigate to="/" replace />
+                } />
+                <Route path='/timeline' element={
+                  authState === AuthState.Authenticated ?
+                    <Timeline /> :
+                    <Navigate to="/" replace />
+                } />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 
-            <nav className="nav nav-pills nav-fill">
-                <NavLink className="nav-link" to="/stats">Stats</NavLink>
-                <NavLink className="nav-link" to="/calendar">Calendar</NavLink>
-                <NavLink className="nav-link" to="/timeline">Timeline</NavLink>
-            </nav>
+            {authState === AuthState.Authenticated && (
+              <nav className="nav nav-pills nav-fill">
+                  <NavLink className="nav-link" to="/stats">Stats</NavLink>
+                  <NavLink className="nav-link" to="/calendar">Calendar</NavLink>
+                  <NavLink className="nav-link" to="/timeline">Timeline</NavLink>
+              </nav>
+            )}
 
 
             <footer className="p-2 bg-dark text-white">
