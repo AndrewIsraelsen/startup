@@ -115,9 +115,9 @@ export function Cal() {
 
     // Save events to localStorage when they change
     useEffect(() => {
-        console.log('Saving calendar events to local storage', events)
+        console.log('Saving calendar events to local storage', events);
         localStorage.setItem('storedEvents', JSON.stringify(events));
-        saveEvents(events);
+
 
     }, [events]);
 
@@ -125,6 +125,7 @@ export function Cal() {
         console.log("I'm trying lmbo");
         await fetch('/api/events', {
             method: 'POST',
+            credentials: 'include',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(events),
         });
@@ -215,6 +216,7 @@ export function Cal() {
 
             // Add new event to our our Event state
             setEvents([...events, eventWithColor]);
+            saveEvents(eventWithColor);
         } else if (args.requestType == 'eventChange') {
             // Get event data
             const eventData = Array.isArray(args.data) ? args.data[0] : args.data;
@@ -234,6 +236,7 @@ export function Cal() {
             setEvents(events.map(evt =>
                 evt.Id == eventWithColor.Id ? eventWithColor : evt
             ));
+            saveEvents(eventWithColor);
         } else if (args.requesetType == 'eventRemove') {
             //Delete event
             const eventData = Array.isArray(args.data) ? args.data[0] : args.data;
