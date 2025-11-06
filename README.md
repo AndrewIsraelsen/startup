@@ -102,12 +102,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Backend is set up with express in index.js
+- [x] **Static middleware for frontend** - Frontend is served by express middleware (epic)
+- [x] **Calls to third party endpoints** - Call to a free api "https://date.nager.at/" that provides date objects for holidays. US holidays show in calendar now.
+- [x] **Backend service endpoints** - Calendar events save to backend with endpoints
+- [x] **Frontend calls service endpoints** - saved events from the back end load to calendar and are saved to the back end from the calendar.
+- [x] **Supports registration, login, logout, and restricted endpoint** - Calendar has authentication and events show up based on the user.
 
 
 ## 🚀 DB deliverable
