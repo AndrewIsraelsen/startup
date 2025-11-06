@@ -30,6 +30,24 @@ export function Cal() {
 
     // Effect Hooks:
 
+      // Demonstrates calling a service asynchronously so that
+    // React can properly update state objects with the results.
+  useEffect(() => {
+      fetch('/api/events', { credentials: 'include' })
+          .then((response) => {
+              if (response.ok) {
+                  return response.json();
+              }
+              throw new Error('Failed to fetch events');
+          })
+          .then((events) => {
+              setEvents(events);
+          })
+          .catch((error) => {
+              console.error('Error fetching events:', error);
+          });
+  }, []);
+  
     // Update event types
     useEffect(() => {
         console.log('Loading event types from localStorage...');
@@ -58,6 +76,26 @@ export function Cal() {
         
         const savedEvents = localStorage.getItem('storedEvents');
 
+        
+        if(savedEvents){
+            console.log('Found calendar events in storage:', savedEvents);
+            const parsedEvents = JSON.parse(savedEvents);
+
+            // Check if it's actually an array
+            if (Array.isArray(parsedEvents)) {
+                const eventsObject = parsedEvents.map(event => ({
+                    ...event,
+                    StartTime: new Date(event.StartTime),
+                    EndTime: new Date(event.EndTime)
+                }));
+                console.log('Loaded events:', eventsObject);
+                setEvents(eventsObject);
+            } else {
+                console.warn('Invalid events data in localStorage, resetting to empty array');
+                setEvents([]);
+            }
+        }
+/*
         if(savedEvents){
             console.log('Found calendar events in storage:', savedEvents);
             const parsedEvents = JSON.parse(savedEvents);
@@ -71,16 +109,26 @@ export function Cal() {
 
             console.log('Loaded events:', eventsObject);
             setEvents(eventsObject)
-        }
+        } */
     }, []);
+    
 
     // Save events to localStorage when they change
     useEffect(() => {
         console.log('Saving calendar events to local storage', events)
         localStorage.setItem('storedEvents', JSON.stringify(events));
+        saveEvents(events);
+
     }, [events]);
 
-    
+    async function saveEvents(events) {
+        console.log("I'm trying lmbo");
+        await fetch('/api/events', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(events),
+        });
+    }
 
     // Add dropdown for eventTypes to syncfusion form
     const onPopupOpen = (args) => {

@@ -1,36 +1,27 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import './login.css';
-import Button from 'react-bootstrap/Button';
 
 import { Unauthenticated } from './unauthenticated';
 import { Authenticated } from './authenticated';
 import { AuthState } from './authState';
 
-
-export function Login() {
-
-
-
-
+export function Login({ userName, authState, onAuthChange }) {
   return (
-        <main className="login-main">
-            <h2 className="fw-bold">Login</h2>
-            <div>
-            <span>Username</span>
-            <input type="text" placeholder="johnsmith@email.com" />
-            </div>
-            <div>
-            <span>Password</span>
-            <input type="password" placeholder="password" />
-            </div>
-            <div id="button">
-                <Button onClick={() => loginUser()} className="btn btn-primary">Login</Button>
-                <Button onClick={() => createUser()} className="btn btn-secondary">Create</Button>
-            </div>
-
-            
-
-        </main>
+    <main className='container-fluid text-center'>
+      <div>
+        {authState !== AuthState.Unknown && <h1>Foundation Calendar</h1>}
+        {console.log(authState)}
+        {authState === AuthState.Authenticated && (
+          <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
+        )}
+        {authState === AuthState.Unauthenticated && (
+          <Unauthenticated
+            userName={userName}
+            onLogin={(loginUserName) => {
+              onAuthChange(loginUserName, AuthState.Authenticated);
+            }}
+          />
+        )}
+      </div>
+    </main>
   );
 }
