@@ -73,21 +73,22 @@ export function Cal(props) {
     // Load Events from local Storage
     useEffect(() => {
         console.log('Loading events from localStorage...');
-        
+
         const savedEvents = localStorage.getItem(`storedEvents_${props.userName}`);
 
-        
         if(savedEvents){
             console.log('Found calendar events in storage:', savedEvents);
             const parsedEvents = JSON.parse(savedEvents);
 
             // Check if it's actually an array
             if (Array.isArray(parsedEvents)) {
-                const eventsObject = parsedEvents.map(event => ({
-                    ...event,
-                    StartTime: new Date(event.StartTime),
-                    EndTime: new Date(event.EndTime)
-                }));
+                const eventsObject = parsedEvents
+                    .filter(event => !event.Id?.toString().startsWith('holiday-')) // Filter out holidays
+                    .map(event => ({
+                        ...event,
+                        StartTime: new Date(event.StartTime),
+                        EndTime: new Date(event.EndTime)
+                    }));
                 console.log('Loaded events:', eventsObject);
                 setEvents(eventsObject);
             } else {
@@ -95,33 +96,24 @@ export function Cal(props) {
                 setEvents([]);
             }
         }
-/*
-        if(savedEvents){
-            console.log('Found calendar events in storage:', savedEvents);
-            const parsedEvents = JSON.parse(savedEvents);
-
-            // convert JSON into date objects
-            const eventsObject = parsedEvents.map(event => ({
-                ...event,
-                StartTime: new Date(event.StartTime),
-                EndTime: new Date(event.EndTime)
-            }));
-
-            console.log('Loaded events:', eventsObject);
-            setEvents(eventsObject)
-        } */
     }, []);
-    
 
     // Save events to localStorage when they change
     useEffect(() => {
-        console.log('Saving calendar events to local storage', events);
-        localStorage.setItem(`storedEvents_${props.userName}`, JSON.stringify(events));
+        // Filter out holidays before saving
+        const userEvents = events.filter(e => !e.Id?.toString().startsWith('holiday-'));
+        console.log('Saving calendar events to local storage', userEvents);
+        localStorage.setItem(`storedEvents_${props.userName}`, JSON.stringify(userEvents));
 
 
     }, [events]);
 
     async function saveEvents(events) {
+        // Don't save if it's a holiday
+        if (events.Id?.toString().startsWith('holiday-')) {
+            return;
+        }
+
         console.log("I'm trying lmbo");
         await fetch('/api/events', {
             method: 'POST',
@@ -130,6 +122,32 @@ export function Cal(props) {
             body: JSON.stringify(events),
         });
     }
+
+  // At the top with your other state
+  const holidaysFetched = React.useRef(false);
+
+  // Update the holidays useEffect
+  useEffect(() => {
+      // Only fetch once ever
+      if (holidaysFetched.current) return;
+
+      fetch('https://date.nager.at/api/v3/PublicHolidays/2025/US')
+          .then(response => response.json())
+          .then(holidays => {
+              const holidayEvents = holidays.map(holiday => ({
+                  Id: `holiday-${holiday.date}`,
+                  Subject: holiday.localName,
+                  StartTime: new Date(holiday.date + 'T00:00:00'),
+                  EndTime: new Date(holiday.date + 'T23:59:59'),
+                  IsAllDay: true,
+                  Color: '#EF4444'
+              }));
+              setEvents(prev => [...prev, ...holidayEvents]);
+              holidaysFetched.current = true; // Mark as fetched
+          });
+  }, [events]); // Keep dependency to wait for backend load
+
+
 
     // Add dropdown for eventTypes to syncfusion form
     const onPopupOpen = (args) => {
@@ -180,9 +198,17 @@ export function Cal(props) {
     };
 
 
-    // Use our own "CRUD" system instead of Sync fusion so that we can handle event types
+    // Make my own "CRUD" system instead of Sync fusion so that we can handle event types
 
     const onActionBegin = (args) => {
+
+        // Don't let people edit holidays
+        const eventData = Array.isArray(args.data) ? args.data[0] : args.data;
+        if (eventData?.Id?.toString().startsWith('holiday-')) {
+            args.cancel = true;
+            return;
+        }
+
         console.log('Action beginning:', args.requestType);
 
         if (args.requestType == 'eventCreate' || args.requestType == 'eventChange' || args.requestType == 'eventRemove' ) {
