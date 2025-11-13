@@ -69,7 +69,7 @@ export function Cal(props) {
             localStorage.setItem('storedEventTypes', JSON.stringify(eventTypes));
         }
     }, [eventTypes]);
-    
+    /*
     // Load Events from local Storage
     useEffect(() => {
         console.log('Loading events from localStorage...');
@@ -97,7 +97,7 @@ export function Cal(props) {
             }
         }
     }, []);
-
+    
     // Save events to localStorage when they change
     useEffect(() => {
         // Filter out holidays before saving
@@ -107,6 +107,7 @@ export function Cal(props) {
 
 
     }, [events]);
+    */
 
     async function saveEvents(events) {
         // Don't save if it's a holiday
@@ -114,7 +115,7 @@ export function Cal(props) {
             return;
         }
 
-        console.log("I'm trying lmbo");
+        console.log("Saving to backend");
         await fetch('/api/events', {
             method: 'POST',
             credentials: 'include',
@@ -290,7 +291,7 @@ export function Cal(props) {
     return (
     <main className="flex justify-center items-center min-h-screen">
         <ScheduleComponent 
-            showQuickInfo={false}
+            showQuickInfo={true}
             selectedDate={new Date()}
             eventSettings={{
                 dataSource: events,
