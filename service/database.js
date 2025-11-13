@@ -34,13 +34,13 @@ async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
-async function addEvent(score) {
-  return eventCollection.insertOne(score);
+async function addEvent(event) {
+  return eventCollection.insertOne(event);
 }
 
-function getEvents() {
-  const query = { score: { $gt: 0, $lt: 900 } };
-lection.find(query, options);
+function getEvents(userEmail) {
+  const query = userEmail ? { userEmail: userEmail } : {};
+  const cursor = eventCollection.find(query);
   return cursor.toArray();
 }
 

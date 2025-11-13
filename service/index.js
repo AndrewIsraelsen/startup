@@ -7,11 +7,6 @@ const DB = require('./database.js');
 
 const authCookieName = 'token';
 
-// The events and users are saved in memory and disappear whenever the service is restarted.
-let users = [];
-let eventTypes = [];
-let userEvents = {};
-
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -62,7 +57,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
     delete user.token;
-    DB.updateUser(user);
+    await DB.updateUser(user);
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -83,26 +78,23 @@ const verifyAuth = async (req, res, next) => {
 
 
 // GetEvents 
-apiRouter.get('/events', verifyAuth, (req, res) => {
-  const user = getUserFromToken(req.cookies[authCookieName]);
+apiRouter.get('/events', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
   //const events = userEvents[user.email] || [];
-  const events = await DB.getEvents();
+  const events = await DB.getEvents(user.email);
   res.send(events);
   console.log("Get:");
   console.log(events);
 });
 
 // SubmitEvents
-apiRouter.post('/events', verifyAuth, (req, res) => {
-  const user = getUserFromToken(req.cookies[authCookieName]);
-  if (!userEvents[user.email]) {
-    userEvents[user.email] = [];
-  }
-  // userEvents[user.email].push(req.body);
-  updateEvents(req.body);
-  res.send(userEvents[user.email]);
+apiRouter.post('/events', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  const events = await updateEvents(req.body, user.email);
+  res.send(events);
+
   console.log("Submit:");
-  console.log(userEvents[user.email]);
 });
 
 // Default error handler
@@ -115,9 +107,13 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-async function updateEvents(newEvent) {
-  await DB.addEvent(newEvent);
-  return DB.getEvents();
+async function updateEvents(newEvent, userEmail) {
+  const eventWithUser = {
+    ...newEvent,
+    userEmail
+  };
+  await DB.addEvent(eventWithUser);
+  return DB.getEvents(userEmail);
 }
 
 async function createUser(email, password) {
@@ -136,13 +132,18 @@ async function createUser(email, password) {
 async function findUser(field, value) {
   if (!value) return null;
 
-  return users.find((u) => u[field] === value);
+  if (field === 'token') {
+    return DB.getUserByToken(value);
+  }
+  // return users.find((u) => u[field] === value);
+  return DB.getUser(value);
 }
 
+/*
 function getUserFromToken(token) {
     return users.find((u) => u.token === token);
 }
-
+*/
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {

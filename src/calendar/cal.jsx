@@ -291,7 +291,7 @@ export function Cal(props) {
     return (
     <main className="flex justify-center items-center min-h-screen">
         <ScheduleComponent 
-            showQuickInfo={true}
+            showQuickInfo={false}
             selectedDate={new Date()}
             eventSettings={{
                 dataSource: events,
