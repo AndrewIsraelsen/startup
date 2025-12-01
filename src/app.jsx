@@ -6,6 +6,7 @@ import { Login } from './login/login';
 import { Calendar } from './calendar/calendar';
 import { Stats } from './stats/stats';
 import { Timeline } from './timeline/timeline';
+import { Chat } from './chat/chat';
 import { AuthState } from './login/authState';
 
 export default function App() {
@@ -13,6 +14,13 @@ export default function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
+
+  // top right date
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const d = new Date();
+  const date = months[d.getMonth()] + " " + d.getDay();
+  
+
 
   return (
     <BrowserRouter>
@@ -24,7 +32,7 @@ export default function App() {
                           <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                           <span className="navbar-toggler-icon"></span>
                           </button>
-                          <a id="date" className="navbar-brand ms-2" href="#">Sept 24</a>
+                          <a id="date" className="navbar-brand ms-2" href="#">{date}</a>
                           <a className="navbar-brand position-absolute top-50 start-50 translate-middle" href="#"><img src="Foundation Calendar.png" alt="Foundation Calendar" style={{height: '50px'}}/></a>
                           <a className="navbar-brand ms-auto" href="#">FC</a>
                           <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -85,6 +93,11 @@ export default function App() {
                     <Timeline /> :
                     <Navigate to="/" replace />
                 } />
+                <Route path='/chat' element={
+                  authState === AuthState.Authenticated ?
+                    <Chat /> :
+                    <Navigate to="/" replace />
+                } />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 
@@ -93,6 +106,7 @@ export default function App() {
                   <NavLink className="nav-link" to="/stats">Stats</NavLink>
                   <NavLink className="nav-link" to="/calendar">Calendar</NavLink>
                   <NavLink className="nav-link" to="/timeline">Timeline</NavLink>
+                  <NavLink className="nav-link" to="/chat">Chat</NavLink>
               </nav>
             )}
 
