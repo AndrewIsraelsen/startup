@@ -3,7 +3,7 @@ import React from 'react';
 function ChatComps({ webSocket, userName }) {
 
   return (
-    <main>
+    <main >
       <Name userName={userName}/>
       <Message name={userName} webSocket={webSocket} />
       <Conversation webSocket={webSocket} />
@@ -14,7 +14,7 @@ function ChatComps({ webSocket, userName }) {
 function Name({ userName }) {
 
   return (
-    <main>
+    <main className='chat'>
       <div className='name'>
         <fieldset id='name-controls'>
           <legend>Welcome: {userName}</legend>
@@ -40,9 +40,9 @@ function Message({ name, webSocket }) {
 
   const disabled = name === '' || !webSocket.connected;
   return (
-    <main>
+    <main className='chat'>
       <fieldset id='chat-controls'>
-        <legend>Chat</legend>
+        <legend>Chat (Amazing calendar feature, I know)</legend>
         <input onKeyDown={(e) => doneMessage(e)} value={message} onChange={(e) => setMessage(e.target.value)} type='text' />
         <button disabled={disabled || !message} onClick={sendMsg}>
           Send
@@ -67,7 +67,7 @@ function Conversation({ webSocket }) {
   ));
 
   return (
-    <main>
+    <main className='chat'>
       <div id='chat-text'>{chatEls}</div>
     </main>
   );
