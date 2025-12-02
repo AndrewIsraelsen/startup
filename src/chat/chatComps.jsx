@@ -1,12 +1,23 @@
 import React from 'react';
 
-function Name({ updateName }) {
+function ChatComps({ webSocket, userName }) {
+
+  return (
+    <main>
+      <Name userName={userName}/>
+      <Message name={userName} webSocket={webSocket} />
+      <Conversation webSocket={webSocket} />
+    </main>
+  );
+}
+
+function Name({ userName }) {
+
   return (
     <main>
       <div className='name'>
         <fieldset id='name-controls'>
-          <legend>My Name</legend>
-          <input onChange={(e) => updateName(e.target.value)} id='my-name' type='text' />
+          <legend>Welcome: {userName}</legend>
         </fieldset>
       </div>
     </main>
@@ -32,7 +43,7 @@ function Message({ name, webSocket }) {
     <main>
       <fieldset id='chat-controls'>
         <legend>Chat</legend>
-        <input disabled={disabled} onKeyDown={(e) => doneMessage(e)} value={message} onChange={(e) => setMessage(e.target.value)} type='text' />
+        <input onKeyDown={(e) => doneMessage(e)} value={message} onChange={(e) => setMessage(e.target.value)} type='text' />
         <button disabled={disabled || !message} onClick={sendMsg}>
           Send
         </button>
@@ -62,7 +73,7 @@ function Conversation({ webSocket }) {
   );
 }
 
-class ChatClient {
+export class ChatClient {
   observers = [];
   connected = false;
 
@@ -106,5 +117,6 @@ class ChatClient {
   }
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Chat webSocket={new ChatClient()} />);
+export function FullChat({ userName }) {
+    return (<ChatComps webSocket={new ChatClient()} userName={userName} />);
+}

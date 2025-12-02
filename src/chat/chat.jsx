@@ -1,29 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './chat.css';
-//import { Name , Message , Conversation } from './chatComps';
+import { FullChat } from './chatComps';
 
 export function Chat() {
-  //const [name, setName] = React.useState('');
+
+  const userName = localStorage.getItem('userName');
 
   return (
-        <div>
-            <h1>placeholder</h1>
-            <h1>placeholder</h1>
-            <h1>placeholder</h1>
-            <h1>placeholder</h1>
-            <h1>placeholder</h1>
-            <h1>placeholder</h1>
-
-
-        </div>
-
+        <FullChat userName={userName}/>
   );
 }
-/*
-    <main>
-      <Name updateName={setName} />
-      <Message name={name} webSocket={webSocket} />
-      <Conversation webSocket={webSocket} />
-    </main>
-    */

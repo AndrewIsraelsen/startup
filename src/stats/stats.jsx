@@ -3,7 +3,9 @@ import './stats.css';
 
 export function Stats() {
 
+    /*
     useEffect(() => {
+        
         const websoc = document.getElementById('websoc');
         const messages = [
             `<div>John hit 4 hours on excercise this week!</div>`,
@@ -26,6 +28,7 @@ export function Stats() {
         // Cleanup: Clear interval when component unmounts
         return () => clearInterval(interval);
     }, []);
+    */
 
     return (
         <main>
@@ -65,7 +68,6 @@ export function Stats() {
 
           </div>
           
-          <h3>Friend updates (websocket powered):</h3>
           <div id='websoc'>
 
           </div>

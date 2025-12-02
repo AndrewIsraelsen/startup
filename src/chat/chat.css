@@ -1,13 +1,11 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #fff8d8;
 }
 #chat-text {
-  padding: 1em 0;
+  padding: 0em 0;
 }
 .received {
   color: rgb(153, 87, 148);
-  margin-left: 0.5em;
 }
 .sent {
   color: rgb(87, 153, 117);
@@ -16,5 +14,16 @@ body {
   color: rgb(225, 103, 10);
 }
 .name {
-  padding: 1em 0;
+  padding: 0em 0;
+  color: rgb(87, 153, 117);
 }
+
+main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px;
+    padding-left: 20px;
+    margin-top: 30px;
+}
+

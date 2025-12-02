@@ -14,7 +14,7 @@ import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Inject } from '@
 import { registerLicense } from '@syncfusion/ej2-base';
 import { DEFAULT_EVENT_TYPES } from '../shared/eventTypes';
 
-export function Cal(props) {
+export function Cal(userName={userName}) {
     registerLicense(
         "Ngo9BigBOggjGyl/Vkd+XU9FcVRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS3tSd0VgWHtacnRVQGleVk91Xg=="
     );
