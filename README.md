@@ -121,8 +121,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - Backend listens for WS upgrade, set up similar to the chat example in class
+- [x] **Frontend makes WebSocket connection** - Front end upgrades to WS backend, set up similar to the chat example in class
+- [x] **Data sent over WebSocket connection** - Chat is sent to all users, set up similar to the chat example in class
+- [x] **WebSocket data displayed** - Chats displayed on chat page
+- [x] **Application is fully functional** - Everything required for the class is working, although there are parts "In Progress" that I want to build out
