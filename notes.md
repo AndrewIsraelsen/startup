@@ -132,3 +132,85 @@ Handling the toggling of the checkboxes was particularly interesting.
   ))}
 </div>
 ```
+
+#
+#
+# Final Exam Topic Notes
+## What is the default port for HTTP/HTTPS/SSH? 
+### 80/443/22
+
+## What does an HTTP status code in the range of 300/400/500 indicate?
+### Errors, first is a redirection error, then client side error, then server error respectively.
+
+## What does the HTTP header content-type allow you to do?
+### Used to specify what type media type the resource is
+
+## What does a “Secure cookie”/”Http-only cookie”/”Same-site cookie” do? https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+### Cookie is only sent over HTTPS/can't be accessed by Javascript (like Document.cookies)/Determines if cookeis can travel to other sites (Strict & Lax)
+
+## Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /api/document?
+### Whatever is in the req function
+
+## Given the following Express service code: What does the following front end JavaScript that performs a fetch return?
+### whatever is in the res function
+
+## Given the following MongoDB query, select all of the matching documents {name:Mark}
+### Probably Mark idek
+
+## How should user passwords be stored?
+### Encrypted in DB
+
+## Assuming the following node.js websocket code in the back end, and the following front end websocket code, what will the front end log to the console?
+### prolly connected or something
+
+## What is the websocket protocol intended to provide?
+### A way for the server to push to clients, as well as clients to push to eachother in a way.
+
+## What do the following acronyms stand for? JSX, JS, AWS, NPM, NVM
+### Javascript XML(Extensible Markup Language), Javascript, Amazon Web service, Node Package Manager, Node Version Manager
+
+## Assuming an HTML document with a body element. What text content will the following React component generate?  The react component will use parameters.
+### Probably whatever's in the component lmbo
+
+## Given a set of React components that include each other, what will be generated
+### Probably a really cool component
+
+## What does a React component with React.useState do?
+### useState stores values for the component to use, like a variable specific to it, or more like a class attribute.
+
+## What are React Hooks used for?
+### They let you organize and hook into things within a component. Access states and when states change and more.
+
+### What does the State Hook/Context Hook/Ref Hook/Effect Hook/Performance Hook do? https://react.dev/reference/react/hooks
+## Remember variables/Gets information from distant parent Components/Variables that aren't rendered with the component (internal data)/Runs function every time a dependancy updates. Especially used for syncing with external systems/Used for memoization of data; not having to do all the rerendering or other work again if it's been done.
+
+## Given React Router code, select statements that are true.
+### Prolly routing and true and false and such ayo
+
+## What does the package.json file do?
+### Has info about your node project. Name, version, dependancies, scripts, etc... Many edits are handled with npm commands (ie: npm install adds packages automatically)
+
+## What does the fetch function do?
+### It allows javascript code to make HTTP requests and specify them.
+
+## What does node.js do?
+### Runs javascript outside of the browser.
+
+## What does pm2 do?
+### It's Process Manager, so it helps run node.js in the background.
+
+## What does Vite do?
+### Transpiles JSX into Javascript and HTML/CSS. 
+
+
+
+
+
+
+
+
+
+
+
+
+
